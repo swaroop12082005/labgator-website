@@ -40,7 +40,7 @@ function CaseStudyModal({ project, onClose, onPrev, onNext }: { project: Project
           }}
         >
           {/* Image */}
-          <div style={{ position: 'relative', height: '260px', overflow: 'hidden' }}>
+          <div style={{ position: 'relative', height: '260px', overflow: 'hidden', borderRadius: 'var(--radius-lg) var(--radius-lg) 0 0' }}>
             <img src={project.image} alt={project.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%)' }} />
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'var(--primary)' }} />
@@ -185,7 +185,7 @@ export function PortfolioSection() {
                 }}
               >
                 {/* Thumb */}
-                <div style={{ width: 80, height: 60, borderRadius: 'var(--radius-sm)', overflow: 'hidden', flexShrink: 0 }}>
+                <div style={{ width: 80, height: 60, borderRadius: 'var(--radius-md)', overflow: 'hidden', flexShrink: 0 }}>
                   <motion.img
                     src={project.image}
                     alt={project.name}

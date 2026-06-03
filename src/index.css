@@ -408,6 +408,7 @@ h1, h2, h3, h4, h5, h6 {
   .section { padding: 5rem 0; }
   .container { padding: 0 1.25rem; }
   .section-header { margin-bottom: 3rem; }
+  .hero-gator img { height: 200px !important; opacity: 0.35; }
 }
 
 @media (max-width: 480px) {

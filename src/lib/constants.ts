@@ -89,7 +89,7 @@ export const PROJECTS = [
     tags: ['Video Production', 'Editing', 'Social Media'],
     result: 'Complete Video Production & Handling',
     description: 'We provided complete Video Production Services (VPS) including promotional videos, reels, and brand-focused visual content, alongside professional video editing for campaigns and comprehensive Social Media Handling (SMH).',
-    image: '/projects/vybrant.webp',
+    image: '/projects/vybrant.png',
     metrics: [
       { label: 'Videos Produced', value: '30+' },
       { label: 'Engagement Rate', value: '8.5%' },
@@ -108,7 +108,7 @@ export const PROJECTS = [
     tags: ['Video Editing', 'Graphic Design', 'Education'],
     result: 'Creative Educational Branding',
     description: 'Collaborated on creative video editing projects for educational and promotional content, while designing eye-catching posters, banners, advertisements, and digital content to boost student engagement.',
-    image: '/projects/mgr-academy.webp',
+    image: '/projects/mgr-academy.png',
     metrics: [
       { label: 'Creative Assets', value: '150+' },
       { label: 'Student Engagement', value: '+75%' },
@@ -127,7 +127,7 @@ export const PROJECTS = [
     tags: ['Shopify', 'Web Dev', 'Social Media'],
     result: 'Premium Shopify Store Launch',
     description: 'Developed and maintained responsive e-commerce websites with user-friendly design and functionality using Shopify, coupled with high-engagement social media campaigns and reels.',
-    image: '/projects/livias.webp',
+    image: '/projects/livias.png',
     metrics: [
       { label: 'Conversion Rate', value: '3.4%' },
       { label: 'Sales Growth', value: '150%+' },
@@ -146,7 +146,7 @@ export const PROJECTS = [
     tags: ['React', 'JavaScript', 'Graphic Design', 'Social Media'],
     result: 'React Platform & SMH',
     description: 'Designed and developed stunning business websites with React and JavaScript, managed social media handling (SMH) to improve online visibility, and created custom brand assets (logos, posters, banners).',
-    image: '/projects/stoykee.webp',
+    image: '/projects/stoykee.png',
     metrics: [
       { label: 'Page Load Speed', value: '0.8s' },
       { label: 'Inquiry Volume', value: '90%+' },
@@ -165,7 +165,7 @@ export const PROJECTS = [
     tags: ['Photography', 'Video Production', 'Social Media'],
     result: 'Food & Ambience Campaign',
     description: 'Conducted professional photography for food products and ambience. Produced engaging promotional videos and reels, edited visual content, and managed social media handling (SMH) to drive massive customer engagement.',
-    image: '/projects/cafe-mellow.webp',
+    image: '/projects/cafe-mellow.png',
     metrics: [
       { label: 'Instagram Growth', value: '400%' },
       { label: 'Footfall Increase', value: '65%' },
@@ -184,7 +184,7 @@ export const PROJECTS = [
     tags: ['Web Dev', 'Graphic Design', 'SEO'],
     result: 'Digital Presence & Collaterals',
     description: 'Developed and maintained the official company website to maximize customer accessibility, while designing creative brochures, banners, and product catalogs to elevate their brand presence.',
-    image: '/projects/sme-granites.webp',
+    image: '/projects/sme-granites.png',
     metrics: [
       { label: 'Client Satisfaction', value: '100%' },
       { label: 'Lead Increase', value: '3×' },

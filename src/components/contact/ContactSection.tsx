@@ -1,7 +1,23 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Mail, Phone, MapPin, CheckCircle, Loader } from 'lucide-react';
+import { Send, Mail, Phone, MapPin, CheckCircle, Loader, AlertCircle } from 'lucide-react';
 import { fadeUp, staggerContainer } from '../../lib/animations';
+import emailjs from '@emailjs/browser';
+
+// ── EmailJS config ──────────────────────────────────────────────────────────
+// 1. Sign up at https://www.emailjs.com (free tier: 200 emails/month)
+// 2. Create a Gmail service → copy Service ID below
+// 3. Create an email template → copy Template ID below
+//    Template variables used: {{from_name}}, {{from_email}}, {{company}}, {{message}}
+// 4. Copy your Public Key from Account → API Keys
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || '';
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '';
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '';
+
+// Initialize EmailJS once (v4 recommended approach)
+if (EMAILJS_PUBLIC_KEY) {
+  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+}
 
 function Field({ label, value, onChange, type = 'text', id, required }: { label: string; value: string; onChange: (v: string) => void; type?: string; id: string; required?: boolean }) {
   const [focused, setFocused] = useState(false);
@@ -59,20 +75,40 @@ function Textarea({ label, value, onChange, id, required }: { label: string; val
 
 export function ContactSection() {
   const [form, setForm] = useState({ name: '', email: '', company: '', message: '' });
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
-    await new Promise((r) => setTimeout(r, 1800));
-    setStatus('success');
-    setForm({ name: '', email: '', company: '', message: '' });
+    try {
+      const result = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          title: `New message from ${form.name} (${form.email})`,
+          name: form.name,
+          email: form.email,
+          reply_to: form.email,
+          time: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+          message: form.company
+            ? `Company: ${form.company}\n\n${form.message}`
+            : form.message,
+        }
+      );
+      console.log('EmailJS success:', result.status, result.text);
+      setStatus('success');
+      setForm({ name: '', email: '', company: '', message: '' });
+    } catch (err: any) {
+      // err is an EmailJSResponseStatus object with .status and .text
+      console.error('EmailJS error — status:', err?.status, '| text:', err?.text, '| full:', err);
+      setStatus('error');
+    }
   };
 
   const info = [
-    { icon: Mail, label: 'Email', value: 'hello@labgators.com' },
-    { icon: Phone, label: 'Phone', value: '+91 98765 43210' },
-    { icon: MapPin, label: 'Location', value: 'India — Global' },
+    { icon: Mail, label: 'Email', value: import.meta.env.VITE_CONTACT_EMAIL || 'labgators25@gmail.com' },
+    { icon: Phone, label: 'Phone', value: import.meta.env.VITE_CONTACT_PHONE || '+91 97905 73114' },
+    { icon: MapPin, label: 'Location', value: import.meta.env.VITE_CONTACT_LOCATION || 'India — Global' },
   ];
 
   return (
@@ -118,6 +154,18 @@ export function ContactSection() {
                   </p>
                   <button onClick={() => setStatus('idle')} className="btn btn-outline" style={{ textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: '0.8125rem' }}>
                     Send Another Message
+                  </button>
+                </motion.div>
+              ) : status === 'error' ? (
+                <motion.div key="error" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4 }}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1.25rem', padding: '4rem 2rem', border: '1px solid var(--primary)', borderRadius: 'var(--radius-lg)', borderTop: '2px solid var(--primary)' }}>
+                  <AlertCircle size={48} style={{ color: 'var(--primary)' }} />
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '3rem', letterSpacing: '0.04em', lineHeight: 0.95 }}>OOPS!</h3>
+                  <p style={{ color: 'var(--text-muted)', maxWidth: '300px', lineHeight: 1.6 }}>
+                    Something went wrong sending your message. Please try again or email us directly at <strong style={{ color: 'var(--text)' }}>{import.meta.env.VITE_FALLBACK_EMAIL || 'vishwa2261@gmail.com'}</strong>
+                  </p>
+                  <button onClick={() => setStatus('idle')} className="btn btn-outline" style={{ textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: '0.8125rem' }}>
+                    Try Again
                   </button>
                 </motion.div>
               ) : (

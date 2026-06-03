@@ -42,6 +42,7 @@ export function HeroSection() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const y = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const gatorY = useTransform(scrollYProgress, [0, 1], [0, 40]);
   const opacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
   return (
@@ -66,6 +67,34 @@ export function HeroSection() {
         height: 3,
         background: 'var(--primary)',
       }} />
+
+      {/* Gator mascot */}
+      <motion.div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 'clamp(-60px, -2vw, -20px)',
+          y: gatorY,
+          zIndex: 1,
+          pointerEvents: 'none',
+          userSelect: 'none',
+        }}
+        initial={{ opacity: 0, x: 80, y: 30 }}
+        animate={{ opacity: 1, x: 0, y: 0 }}
+        transition={{ delay: 0.9, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        className="hero-gator"
+      >
+        <img
+          src="/Transparent bg gator.png"
+          alt="LabGators Mascot"
+          style={{
+            height: 'clamp(320px, 46vh, 620px)',
+            width: 'auto',
+            display: 'block',
+            filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.55))',
+          }}
+        />
+      </motion.div>
 
       {/* Diagonal lime stripe */}
       <div style={{
