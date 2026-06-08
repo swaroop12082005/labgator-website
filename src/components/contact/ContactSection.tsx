@@ -112,9 +112,10 @@ export function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="section" style={{ background: 'var(--bg-surface)', borderBottom: '1px solid var(--border-strong)' }}>
+    <section id="contact" data-scene="contact" className="section" style={{ background: 'var(--bg-surface)', borderBottom: '1px solid var(--border-strong)' }}>
       <div className="container">
         <motion.div
+          className="reveal"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -142,7 +143,7 @@ export function ContactSection() {
           className="contact-grid"
         >
           {/* Form */}
-          <motion.div variants={fadeUp}>
+          <motion.div variants={fadeUp} className="tilt-card reveal parallax">
             <AnimatePresence mode="wait">
               {status === 'success' ? (
                 <motion.div key="success" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4 }}
@@ -192,7 +193,7 @@ export function ContactSection() {
           </motion.div>
 
           {/* Info */}
-          <motion.div variants={fadeUp}>
+          <motion.div variants={fadeUp} className="tilt-card reveal parallax">
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '3rem', fontSize: '1rem' }}>
               Big ambitions or small budgets — we treat every brand with the same relentless focus. Tell us what you need.
             </p>

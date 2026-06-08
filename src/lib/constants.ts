@@ -19,7 +19,7 @@ export const SERVICES = [
   {
     id: 2,
     title: 'Website Development',
-    description: 'High-performance, conversion-optimized websites built with cutting-edge technology and premium UX design.',
+    description: 'High-performance, conversion-optimized websites built with cutting-edge technology and professional UX design.',
     icon: '💻',
     color: '#B026FF',
     featured: false,
@@ -115,7 +115,7 @@ export const PROJECTS = [
       { label: 'Enrollment Boost', value: '40%' },
     ],
     testimonial: {
-      quote: 'Their creative designs and educational videos significantly boosted student engagement and gave our academy a premium look.',
+      quote: 'Their creative designs and educational videos significantly boosted student engagement and gave our academy a standout look.',
       author: 'MGR Academy Director',
     },
     color: '#FF3E6C',
@@ -125,7 +125,7 @@ export const PROJECTS = [
     name: 'Livias',
     category: 'E-commerce & Shopify',
     tags: ['Shopify', 'Web Dev', 'Social Media'],
-    result: 'Premium Shopify Store Launch',
+    result: 'Shopify Store Launch',
     description: 'Developed and maintained responsive e-commerce websites with user-friendly design and functionality using Shopify, coupled with high-engagement social media campaigns and reels.',
     image: '/projects/livias.png',
     metrics: [

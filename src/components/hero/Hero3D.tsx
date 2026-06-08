@@ -1,5 +1,5 @@
-import { useRef, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { useRef, Suspense, useEffect } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Float, MeshDistortMaterial, Sphere, Torus, Octahedron, MeshWobbleMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
@@ -96,8 +96,61 @@ export function Hero3D() {
           {/* Octahedrons */}
           <FloatingOcta position={[-1, 2.5, -1]} color="#00D4A1" />
           <FloatingOcta position={[2.5, 2, -3]} color="#FF6B6B" />
+          {/* Particles + fog + camera subtle motion */}
+          <SceneFX />
         </Suspense>
       </Canvas>
     </div>
   );
+}
+
+function SceneFX() {
+  const { scene, camera, gl } = useThree();
+  const pointsRef = useRef<THREE.Points>(null);
+
+  useEffect(() => {
+    // soft exponential fog for cinematic depth
+    scene.fog = new THREE.FogExp2('#050507', 0.012);
+
+    return () => { scene.fog = null as any; };
+  }, [scene]);
+
+  useEffect(() => {
+    // create a lightweight particle field
+    const count = 600;
+    const positions = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      const r = 6 + Math.random() * 18;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = (Math.random() - 0.5) * Math.PI;
+      positions[i * 3 + 0] = Math.cos(theta) * Math.cos(phi) * r;
+      positions[i * 3 + 1] = Math.sin(phi) * r * 0.6;
+      positions[i * 3 + 2] = Math.sin(theta) * Math.cos(phi) * r;
+    }
+
+    const geom = new THREE.BufferGeometry();
+    geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const mat = new THREE.PointsMaterial({ size: 0.035, color: new THREE.Color('#ffffff'), transparent: true, opacity: 0.06, depthWrite: false });
+    const pts = new THREE.Points(geom, mat);
+    pts.frustumCulled = false;
+    scene.add(pts);
+
+    return () => { scene.remove(pts); geom.dispose(); (mat as any).dispose && (mat as any).dispose(); };
+  }, [scene]);
+
+  useFrame((state) => {
+    const t = state.clock.elapsedTime;
+    // gentle camera drift
+    camera.position.x = Math.sin(t * 0.06) * 0.6;
+    camera.position.y = Math.sin(t * 0.03) * 0.25;
+    camera.position.z = 7.9 + Math.sin(t * 0.02) * 0.08;
+    camera.lookAt(0, 0, 0);
+
+    if (pointsRef.current) {
+      pointsRef.current.rotation.y = t * 0.02;
+      pointsRef.current.rotation.x = Math.sin(t * 0.01) * 0.02;
+    }
+  });
+
+  return <points ref={pointsRef} />;
 }

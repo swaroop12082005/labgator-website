@@ -114,11 +114,11 @@ export function PortfolioSection() {
   };
 
   return (
-    <section id="portfolio" className="section" style={{ borderBottom: '1px solid var(--border-strong)' }}>
+    <section id="portfolio" data-scene="portfolio" className="section" style={{ borderBottom: '1px solid var(--border-strong)' }}>
       <div className="container">
         {/* Header */}
         <motion.div
-          className="section-header"
+          className="section-header reveal"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -160,6 +160,7 @@ export function PortfolioSection() {
           <AnimatePresence>
             {filtered.map((project) => (
               <motion.div
+                className="tilt-card reveal parallax"
                 key={project.id}
                 variants={fadeUp}
                 initial="hidden"

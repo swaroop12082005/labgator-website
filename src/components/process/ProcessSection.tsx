@@ -7,10 +7,11 @@ export function ProcessSection() {
   const [activeStep, setActiveStep] = useState<number | null>(null);
 
   return (
-    <section id="process" className="section" style={{ background: 'var(--bg-surface)', borderBottom: '1px solid var(--border-strong)' }}>
+    <section id="process" data-scene="process" className="section" style={{ background: 'var(--bg-surface)', borderBottom: '1px solid var(--border-strong)' }}>
       <div className="container">
         {/* Header row */}
         <motion.div
+          className="reveal"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -73,8 +74,9 @@ export function ProcessSection() {
         >
           {PROCESS_STEPS.map((step, i) => {
             const isActive = activeStep === i;
-            return (
+              return (
               <motion.div
+                className="process-row tilt-card reveal parallax"
                 key={step.step}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}

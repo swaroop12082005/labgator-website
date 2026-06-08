@@ -3,6 +3,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useTheme } from './hooks/useTheme';
 import { Navigation } from './components/layout/Navigation';
 import { Footer } from './components/layout/Footer';
+import { SmoothScroll } from './components/layout/SmoothScroll';
+import Spotlight from './components/Spotlight';
 
 import { HeroSection } from './components/hero/HeroSection';
 import { ServicesSection } from './components/services/ServicesSection';
@@ -11,54 +13,42 @@ import { ProcessSection } from './components/process/ProcessSection';
 import { TestimonialsSection } from './components/testimonials/TestimonialsSection';
 import { ContactSection } from './components/contact/ContactSection';
 import './index.css';
+import initGsapScroll from './lib/gsapScroll';
 
-function LoadingScreen({ onComplete }: { onComplete: () => void }) {
-  useEffect(() => {
-    const timer = setTimeout(onComplete, 2200);
-    return () => clearTimeout(timer);
-  }, [onComplete]);
-
-  return (
-    <motion.div
-      className="loading-screen"
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.4 }}
-    >
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        style={{ textAlign: 'center' }}
-      >
-        <div className="loading-logo">
-          LAB<span style={{ color: 'var(--primary)' }}>GATORS</span>
-        </div>
-        <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.625rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)', marginTop: '0.5rem' }}>
-          Building brands that dominate
-        </p>
-      </motion.div>
-
-      <div className="loading-bar">
-        <div className="loading-bar-fill" />
-      </div>
-    </motion.div>
-  );
-}
+// Loader component moved to src/components/Loader.tsx
 
 export default function App() {
   const { theme, toggleTheme } = useTheme();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // Run GSAP initialisation shortly after mount
+    const t = setTimeout(() => {
+      try { initGsapScroll(); } catch (e) { /* ignore */ }
+    }, 600);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <>
       {/* Noise overlay */}
       <div className="noise-overlay" />
+      <div className="aurora-bg" aria-hidden />
+      <div className="smoke-overlay" aria-hidden />
+
+      {/* Scene wipe used for cinematic transitions (animated by GSAP) */}
+      <div className="scene-wipe" aria-hidden />
+
+      {/* Floating logo animation */}
+      <div className="floating-logo" aria-hidden>
+        <img src="/favicon.png" alt="logo" />
+      </div>
 
 
 
       {/* Loading */}
       <AnimatePresence>
-        {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
+        {loading && <Loader onComplete={() => setLoading(false)} />}
       </AnimatePresence>
 
       {/* Main app */}
@@ -70,15 +60,25 @@ export default function App() {
             transition={{ duration: 0.5 }}
           >
             <Navigation theme={theme} onToggleTheme={toggleTheme} />
+            <Spotlight />
 
-            <main>
-              <HeroSection />
-              <ServicesSection />
-              <PortfolioSection />
-              <ProcessSection />
-              <TestimonialsSection />
-              <ContactSection />
-            </main>
+            {/* Floating gradient blobs for cinematic feel */}
+            <div className="floating-blobs" aria-hidden>
+              <div className="blob blob-1" />
+              <div className="blob blob-2" />
+              <div className="blob blob-3" />
+            </div>
+
+            <SmoothScroll>
+              <main>
+                <HeroSection />
+                <ServicesSection />
+                <PortfolioSection />
+                <ProcessSection />
+                <TestimonialsSection />
+                <ContactSection />
+              </main>
+            </SmoothScroll>
 
             <Footer />
           </motion.div>

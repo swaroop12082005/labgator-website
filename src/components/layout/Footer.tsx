@@ -44,7 +44,7 @@ export function Footer() {
 
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         {/* CTA strip */}
-        <div style={{ padding: '5rem 0', borderBottom: '1px solid var(--border-strong)', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '2rem', flexWrap: 'wrap' }}>
+        <motion.div className="footer-cta" initial={{ y: 18, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true, amount: 0.2 }} style={{ padding: '5rem 0', borderBottom: '1px solid var(--border-strong)', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '2rem', flexWrap: 'wrap' }}>
           <div>
             <p className="eyebrow" style={{ marginBottom: '1rem' }}>Ready to dominate?</p>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(3rem, 6vw, 6rem)', lineHeight: 0.92, letterSpacing: '0.02em', color: 'var(--text)' }}>
@@ -61,7 +61,7 @@ export function Footer() {
           >
             Start a Project ↗
           </motion.a>
-        </div>
+        </motion.div>
 
         {/* Grid */}
         <motion.div
@@ -134,7 +134,7 @@ export function Footer() {
         </motion.div>
 
         {/* Bottom bar */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.5rem 0', borderTop: '1px solid var(--border)', flexWrap: 'wrap', gap: '1rem' }}>
+        <motion.div className="footer-cta" initial={{ y: 18, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true, amount: 0.2 }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.5rem 0', borderTop: '1px solid var(--border)', flexWrap: 'wrap', gap: '1rem' }}>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
             © {year} LABGATORS. ALL RIGHTS RESERVED.
           </p>
@@ -147,7 +147,7 @@ export function Footer() {
           >
             <ArrowUp size={14} />
           </motion.button>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

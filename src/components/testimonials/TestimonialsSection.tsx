@@ -5,9 +5,10 @@ export function TestimonialsSection() {
   const doubled = [...TESTIMONIALS, ...TESTIMONIALS];
 
   return (
-    <section id="about" className="section" style={{ borderBottom: '1px solid var(--border-strong)', overflow: 'hidden' }}>
+    <section id="about" data-scene="testimonials" className="section" style={{ borderBottom: '1px solid var(--border-strong)', overflow: 'hidden' }}>
       <div className="container">
         <motion.div
+          className="reveal"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -37,7 +38,7 @@ export function TestimonialsSection() {
           onMouseLeave={(e) => (e.currentTarget.style.animationPlayState = 'running')}
         >
           {doubled.map((t, i) => (
-            <TestimonialCard key={i} t={t} />
+            <div key={i} className="tilt-card reveal parallax"><TestimonialCard t={t} /></div>
           ))}
         </div>
       </div>
@@ -51,7 +52,7 @@ export function TestimonialsSection() {
           onMouseLeave={(e) => (e.currentTarget.style.animationPlayState = 'running')}
         >
           {[...doubled].reverse().map((t, i) => (
-            <TestimonialCard key={i} t={t} compact />
+            <div key={i} className="tilt-card reveal parallax"><TestimonialCard t={t} compact /></div>
           ))}
         </div>
       </div>

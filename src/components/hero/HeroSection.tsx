@@ -4,6 +4,9 @@ import { TypeAnimation } from 'react-type-animation';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { STATS } from '../../lib/constants';
 import { useCounter } from '../../hooks/useCounter';
+import { Hero3D } from './Hero3D';
+import { MagneticButton } from '../ui/MagneticButton';
+import TextReveal from '../ui/TextReveal';
 
 function StatCard({ value, suffix, label, delay }: { value: number; suffix: string; label: string; delay: number }) {
   const [started, setStarted] = useState(false);
@@ -48,6 +51,7 @@ export function HeroSection() {
   return (
     <section
       id="home"
+      data-scene="hero"
       ref={ref}
       style={{
         minHeight: '100vh',
@@ -60,6 +64,11 @@ export function HeroSection() {
         borderBottom: '1px solid var(--border-strong)',
       }}
     >
+      {/* Decorative hero blobs (purple) */}
+      <div className="hero-blob-1" aria-hidden />
+      <div className="hero-blob-2" aria-hidden />
+        {/* 3D floating background visuals */}
+        <Hero3D />
       {/* Orange corner accent */}
       <div style={{
         position: 'absolute', top: 68, right: 0,
@@ -73,25 +82,26 @@ export function HeroSection() {
         style={{
           position: 'absolute',
           bottom: 0,
-          right: 'clamp(-60px, -2vw, -20px)',
+          left: 'clamp(8px, 2vw, 28px)',
           y: gatorY,
-          zIndex: 1,
+          zIndex: 4,
           pointerEvents: 'none',
           userSelect: 'none',
         }}
-        initial={{ opacity: 0, x: 80, y: 30 }}
+        initial={{ opacity: 0, x: -80, y: 30 }}
         animate={{ opacity: 1, x: 0, y: 0 }}
-        transition={{ delay: 0.9, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ delay: 0.6, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         className="hero-gator"
       >
         <img
           src="/Transparent bg gator.png"
           alt="LabGators Mascot"
           style={{
-            height: 'clamp(320px, 46vh, 620px)',
+            height: 'clamp(440px, 60vh, 900px)',
             width: 'auto',
             display: 'block',
-            filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.55))',
+            filter: 'drop-shadow(0 30px 80px rgba(0,0,0,0.65))',
+            transformOrigin: 'bottom left'
           }}
         />
       </motion.div>
@@ -109,26 +119,17 @@ export function HeroSection() {
 
       {/* Large faint text watermark */}
       <motion.div
+        className="hero-watermark"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.04 }}
+        animate={{ opacity: 0.06 }}
         transition={{ delay: 0.5, duration: 1 }}
-        style={{
-          position: 'absolute',
-          bottom: '-4%', right: '-2%',
-          fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(10rem, 25vw, 28rem)',
-          userSelect: 'none',
-          pointerEvents: 'none',
-          color: 'var(--text)',
-          lineHeight: 0.85,
-          letterSpacing: '-0.02em',
-          whiteSpace: 'nowrap',
-        }}
       >
         GATORS
       </motion.div>
 
-      <motion.div className="container" style={{ y, opacity, paddingTop: '4rem', paddingBottom: '4.5rem', position: 'relative', zIndex: 2 }}>
+      <div className="cinematic-hero reveal" style={{ position: 'relative', zIndex: 2 }}>
+        <div className="hero-inner">
+          <motion.div className="container reveal parallax" style={{ y, opacity, paddingTop: '4rem', paddingBottom: '4.5rem', position: 'relative' }}>
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -142,31 +143,13 @@ export function HeroSection() {
 
         {/* Headline — editorial giant */}
         <div style={{ marginBottom: '2.5rem' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="display-xl"
-            style={{ fontFamily: 'var(--font-display)', color: 'var(--text)', letterSpacing: '0.01em' }}
-          >
-            WE BUILD
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.38, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(4.5rem, 13vw, 13rem)',
-              lineHeight: 0.88,
-              letterSpacing: '0.01em',
-              color: 'var(--primary)',
-              position: 'relative',
-              display: 'inline-block',
-            }}
-          >
-            BRANDS
+          {/* Letter-by-letter headline for a cinematic effect */}
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.12 }}>
+            <TextReveal delay={0.12}>WE BUILD BRANDS</TextReveal>
+            <motion.div style={{ marginTop: '0.8rem' }} initial={{ scale: 0.98, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.9, duration: 0.8 }}>
+              <span className="display-xl" style={{ fontFamily: 'var(--font-display)', color: '#FFFFFF', letterSpacing: '-3px', fontWeight: 900 }}>THAT</span>
+              <span className="display-xl" style={{ fontFamily: 'var(--font-display)', color: '#D4AF37', letterSpacing: '-3px', fontWeight: 900, marginLeft: '0.8rem' }}>DOMINATE.</span>
+            </motion.div>
           </motion.div>
 
           <motion.div
@@ -219,10 +202,12 @@ export function HeroSection() {
           <div style={{ maxWidth: '460px' }}>
             <p style={{
               fontFamily: 'var(--font-body)',
-              fontSize: '1.0625rem',
+              fontSize: '1.125rem',
               color: 'var(--text-muted)',
-              lineHeight: 1.65,
+              lineHeight: 1.75,
               marginBottom: '1.75rem',
+              fontWeight: 400,
+              letterSpacing: '0.5px',
             }}>
               <TypeAnimation
                 sequence={[
@@ -239,27 +224,21 @@ export function HeroSection() {
               />
             </p>
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <motion.a
+              <MagneticButton
                 href="#contact"
-                onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
+                onClick={(e: any) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
                 className="btn btn-primary"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                id="hero-cta-primary"
-                style={{ textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: '0.8125rem' }}
               >
                 Start a Project <ArrowUpRight size={14} />
-              </motion.a>
-              <motion.a
+              </MagneticButton>
+
+              <MagneticButton
                 href="#portfolio"
-                onClick={(e) => { e.preventDefault(); document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' }); }}
+                onClick={(e: any) => { e.preventDefault(); document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' }); }}
                 className="btn btn-outline"
-                whileHover={{ scale: 1.03 }}
-                id="hero-cta-secondary"
-                style={{ textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: '0.8125rem' }}
               >
                 See Our Work
-              </motion.a>
+              </MagneticButton>
             </div>
           </div>
 
@@ -270,7 +249,9 @@ export function HeroSection() {
             ))}
           </div>
         </motion.div>
-      </motion.div>
+          </motion.div>
+        </div>
+      </div>
 
       {/* Scroll indicator */}
       <motion.button

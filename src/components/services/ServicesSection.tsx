@@ -96,11 +96,11 @@ export function ServicesSection() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
 
   return (
-    <section id="services" className="section" style={{ background: 'var(--bg-surface)', borderBottom: '1px solid var(--border-strong)' }}>
+    <section id="services" data-scene="services" className="section" style={{ background: 'var(--bg-surface)', borderBottom: '1px solid var(--border-strong)' }}>
       <div className="container">
         {/* Header */}
         <motion.div
-          className="section-header"
+          className="section-header reveal"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -131,65 +131,42 @@ export function ServicesSection() {
         >
           {SERVICES.map((service, i) => (
             <motion.div
+              className="tilt-card reveal flip-card"
               key={service.id}
               variants={fadeUp}
-              onClick={() => setActiveService(service)}
               onMouseEnter={() => setHoveredId(service.id)}
               onMouseLeave={() => setHoveredId(null)}
               style={{
-                display: 'grid',
-                gridTemplateColumns: '4rem 1fr auto',
-                alignItems: 'center',
-                gap: '2rem',
-                padding: '1.75rem 0',
-                borderBottom: '1px solid var(--border)',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-                background: hoveredId === service.id ? 'var(--primary-dim)' : 'transparent',
-                paddingLeft: hoveredId === service.id ? '1rem' : '0',
-                paddingRight: hoveredId === service.id ? '1rem' : '0',
-                borderRadius: hoveredId === service.id ? 'var(--radius-md)' : '0',
+                perspective: 1200,
+                marginBottom: '1rem',
               }}
             >
-              {/* Number */}
-              <span style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.75rem',
-                color: hoveredId === service.id ? 'var(--primary)' : 'var(--text-subtle)',
-                letterSpacing: '0.08em',
-                transition: 'color 0.2s',
-              }}>
-                0{i + 1}
-              </span>
-
-              {/* Title + description */}
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.3rem' }}>
-                  <span style={{ fontSize: '1.5rem' }}>{service.icon}</span>
-                  <h3 style={{
-                    fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(1.5rem, 3vw, 2.25rem)',
-                    letterSpacing: '0.03em',
-                    color: hoveredId === service.id ? 'var(--primary)' : 'var(--text)',
-                    transition: 'color 0.2s',
-                    lineHeight: 1,
-                  }}>
-                    {service.title.toUpperCase()}
-                  </h3>
+              <div className="flip-card-inner" onClick={() => setActiveService(service)}>
+                <div className="flip-card-front" style={{ display: 'grid', gridTemplateColumns: '4rem 1fr auto', alignItems: 'center', gap: '2rem', padding: '1.75rem', borderRadius: 'var(--radius-md)', background: hoveredId === service.id ? 'var(--primary-dim)' : 'transparent', border: '1px solid var(--border)' }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: hoveredId === service.id ? 'var(--primary)' : 'var(--text-subtle)', letterSpacing: '0.08em' }}>0{i + 1}</span>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.3rem' }}>
+                      <span style={{ fontSize: '1.5rem' }}>{service.icon}</span>
+                      <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', letterSpacing: '0.03em', color: hoveredId === service.id ? 'var(--primary)' : 'var(--text)', lineHeight: 1 }}>{service.title.toUpperCase()}</h3>
+                    </div>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', maxWidth: '480px', lineHeight: 1.5 }}>{service.description}</p>
+                  </div>
+                  <motion.div animate={{ x: hoveredId === service.id ? 0 : -8, opacity: hoveredId === service.id ? 1 : 0 }} transition={{ duration: 0.2 }} style={{ color: 'var(--primary)' }}>
+                    <ArrowUpRight size={20} />
+                  </motion.div>
                 </div>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', maxWidth: '480px', lineHeight: 1.5 }}>
-                  {service.description}
-                </p>
-              </div>
 
-              {/* Arrow */}
-              <motion.div
-                animate={{ x: hoveredId === service.id ? 0 : -8, opacity: hoveredId === service.id ? 1 : 0 }}
-                transition={{ duration: 0.2 }}
-                style={{ color: 'var(--primary)' }}
-              >
-                <ArrowUpRight size={20} />
-              </motion.div>
+                <div className="flip-card-back" style={{ padding: '1.75rem', borderRadius: 'var(--radius-md)', background: 'linear-gradient(180deg, rgba(10,10,12,0.9), rgba(6,6,8,0.92))', border: '1px solid rgba(255,255,255,0.03)' }}>
+                  <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '1rem' }}>Deliverables</h4>
+                  <ul style={{ display: 'grid', gap: '0.5rem', marginBottom: '1rem' }}>
+                    {service.deliverables.map((d) => <li key={d} style={{ color: 'var(--text)', fontSize: '0.95rem' }}>• {d}</li>)}
+                  </ul>
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <button onClick={() => setActiveService(service)} className="btn btn-outline">Learn More</button>
+                    <a href="#contact" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }} className="btn btn-primary">Start Project</a>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           ))}
         </motion.div>
