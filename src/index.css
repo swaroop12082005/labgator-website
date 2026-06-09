@@ -75,6 +75,35 @@
   --overlay:        rgba(10,10,10,0.96);
 }
 
+/* DAY THEME — White & Gold ("white-gold") */
+[data-theme='light'] {
+  /* Base surfaces */
+  --bg:             #FFFFFF; /* bright white canvas */
+  --bg-surface:     #FFFFFF;
+  --bg-card:        #FFFFFF;
+  --bg-invert:      #0B0F19; /* deep charcoal for inverted elements */
+
+  /* Gold palette */
+  --primary:        #D4AF37; /* primary gold */
+  --primary-2:      #F5C542; /* luxury gold */
+  --primary-dim:    rgba(212,175,55,0.06);
+  --accent:         #D4AF37;
+  --accent-dim:     rgba(212,175,55,0.04);
+  --stat-color:     #D4AF37;
+  --small-label:    #64748B;
+
+  /* Text colors for day theme */
+  --text:           #0B0F19; /* deep black / charcoal for headings and body */
+  --text-muted:     #475569; /* soft slate for paragraphs */
+  --text-subtle:    #94A3B8;
+
+  /* Borders & shadows */
+  --border:         rgba(212,175,55,0.12);
+  --border-strong:  rgba(212,175,55,0.2);
+  --shadow:         rgba(2,6,23,0.06);
+  --overlay:        rgba(255,255,255,0.96);
+}
+
 /* ============================================================
    RESET & BASE
    ============================================================ */
