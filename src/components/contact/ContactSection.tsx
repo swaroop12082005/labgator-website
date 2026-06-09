@@ -106,7 +106,7 @@ export function ContactSection() {
   };
 
   const info = [
-    { icon: Mail, label: 'Email', value: import.meta.env.VITE_CONTACT_EMAIL || 'labgators25@gmail.com' },
+    { icon: Mail, label: 'Email', value: import.meta.env.VITE_CONTACT_EMAIL || 'hello@labgators.com' },
     { icon: Phone, label: 'Phone', value: import.meta.env.VITE_CONTACT_PHONE || '+91 97905 73114' },
     { icon: MapPin, label: 'Location', value: import.meta.env.VITE_CONTACT_LOCATION || 'India — Global' },
   ];
