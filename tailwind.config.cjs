@@ -8,11 +8,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#6366F1',
-        secondary: '#8B5CF6',
-        accent: '#06B6D4',
-        bg: '#050816',
-        surface: '#111827'
+        primary: '#D4AF37',
+        secondary: '#C9A227',
+        accent: '#F5C542',
+        bg: '#F8F6F1',
+        surface: '#FFFFFF'
       },
       fontFamily: {
         display: ['Bebas Neue', 'ui-serif', 'Georgia'],

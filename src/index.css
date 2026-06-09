@@ -23,38 +23,39 @@
   --z-modal: 300;
 }
 
-/* THEME TOKENS — BLACK & GOLD LUXURY */
+/* THEME TOKENS — WHITE & GOLD LUXURY (default day theme) */
 :root {
-  /* Base surfaces — Deep black theme */
-  --bg:             #0A0A0A; /* Rich Black background */
-  --bg-surface:     #121212; /* Slightly lighter for cards */
-  --bg-card:        #0F0F0F; /* Deep card background */
-  --bg-invert:      #FFFFFF; /* White for inverted elements */
+  /* Base surfaces — bright white canvas */
+  --bg:             #F8F6F1; /* soft warm white */
+  --bg-surface:     #FAF9F6;
+  --bg-card:        #FFFFFF;
+  --bg-invert:      #0B0F19; /* charcoal for inverted elements */
 
-  /* Luxury Gold palette */
-  --primary:        #D4AF37; /* Primary Gold */
-  --primary-2:      #F5C542; /* Luxury Gold bright */
-  --primary-dim:    rgba(212,175,55,0.12);
-  --accent:         #D4AF37; /* Gold accent */
-  --accent-dim:     rgba(212,175,55,0.08);
-  --stat-color:     #F5C542; /* Stats in bright gold */
-  --small-label:    #B8B8B8; /* Muted silver/gray */
-  --lime:           #D4AF37; /* Replace lime with gold */
+  /* Gold palette */
+  --primary:        #D4AF37; /* primary gold */
+  --primary-2:      #F5C542; /* luxury gold */
+  --primary-3:      #C9A227;
+  --primary-dim:    rgba(212,175,55,0.08);
+  --accent:         #D4AF37;
+  --accent-dim:     rgba(212,175,55,0.06);
+  --stat-color:     #D4AF37;
+  --small-label:    #6B7280;
+  --lime:           #D4AF37;
 
-  /* Premium text colors */
-  --text:           #FFFFFF; /* Main text white */
-  --text-muted:     #E5E5E5; /* Secondary text light gray */
-  --text-subtle:    #B8B8B8; /* Tertiary text muted gray */
+  /* Text colors for day theme */
+  --text:           #111111; /* primary text */
+  --text-muted:     #2D2D2D; /* secondary */
+  --text-subtle:    #6B7280; /* muted */
 
-  /* Borders & shadows — Gold-tinted */
-  --border:         rgba(212,175,55,0.15);
-  --border-strong:  rgba(212,175,55,0.25);
-  --shadow:         rgba(0,0,0,0.4);
-  --overlay:        rgba(10,10,10,0.96);
+  /* Borders & shadows */
+  --border:         rgba(212,175,55,0.12);
+  --border-strong:  rgba(212,175,55,0.15);
+  --shadow:         rgba(2,6,23,0.06);
+  --overlay:        rgba(255,255,255,0.96);
 }
 
-/* DARK THEME (default) — Black & Gold Luxury */
-[data-theme='dark'], :root {
+/* DARK THEME — optional dark mode */
+[data-theme='dark'] {
   --bg:             #0A0A0A;
   --bg-surface:     #121212;
   --bg-card:        #0F0F0F;
@@ -264,21 +265,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ============================================================
-   CARDS — editorial, NO glassmorphism
+   CARDS — premium white glassmorphism
    ============================================================ */
 .card {
-  background: rgba(18,18,18,0.7);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border);
+  background: var(--bg-card);
   border-radius: var(--radius-md);
   padding: 2rem;
-  transition: border-color 0.3s ease, transform 0.25s ease, box-shadow 0.3s ease;
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 18px rgba(16,24,40,0.06);
+  transition: border-color 0.28s ease, transform 0.22s ease, box-shadow 0.28s ease;
 }
 
 .card:hover {
-  border-color: var(--primary);
-  box-shadow: 0 0 30px rgba(212,175,55,0.2), inset 0 0 20px rgba(212,175,55,0.05);
-  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: 0 18px 48px rgba(16,24,40,0.08), 0 0 28px rgba(212,175,55,0.06);
+  transform: translateY(-6px);
 }
 
 /* ============================================================
@@ -474,8 +475,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Cinematic light rays — Gold tinted */
 .light-rays { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-.light-rays::before { content: ''; position: absolute; left: -20%; top: -40%; width: 140%; height: 160%; background: radial-gradient(closest-side, rgba(212,175,55,0.08), transparent 30%); transform: rotate(-12deg) translateZ(0); filter: blur(50px); }
-.light-rays::after { content: ''; position: absolute; right: -30%; bottom: -10%; width: 90%; height: 90%; background: linear-gradient(120deg, rgba(212,175,55,0.04), rgba(245,197,66,0.03)); filter: blur(80px); }
+.light-rays::before { content: ''; position: absolute; left: -20%; top: -40%; width: 140%; height: 160%; background: radial-gradient(closest-side, rgba(212,175,55,0.09), transparent 30%); transform: rotate(-12deg) translateZ(0); filter: blur(48px); }
+.light-rays::after { content: ''; position: absolute; right: -30%; bottom: -10%; width: 90%; height: 90%; background: linear-gradient(120deg, rgba(212,175,55,0.045), rgba(245,197,66,0.035)); filter: blur(72px); }
 
 /* Smoke / fog canvas-like overlay */
 .smoke-overlay {
@@ -531,18 +532,18 @@ h1, h2, h3, h4, h5, h6 {
 
 @keyframes blobFloat { 0% { transform: translateY(0) scale(1); } 50% { transform: translateY(-28px) scale(1.05); } 100% { transform: translateY(0) scale(1); } }
 
-/* Hero background — Pure black with gold spotlight */
+/* Hero background — White & Gold day theme */
 #home {
-  background: radial-gradient(1000px 500px at 75% 30%, rgba(212,175,55,0.05), transparent 18%),
-              radial-gradient(800px 450px at 20% 70%, rgba(245,197,66,0.03), transparent 15%),
-              linear-gradient(180deg, #0A0A0A 0%, #050505 100%);
+  background: radial-gradient(900px 420px at 75% 30%, rgba(212,175,55,0.06), transparent 16%),
+              radial-gradient(700px 380px at 20% 70%, rgba(245,197,66,0.03), transparent 14%),
+              linear-gradient(180deg, var(--bg) 0%, #FAF9F6 100%);
   position: relative;
   overflow: visible;
 }
 
 /* Extra decorative blobs specific to the hero (purple tones) */
-.hero-blob-1 { position: absolute; right: -6%; top: 6%; width: 560px; height: 560px; background: radial-gradient(circle at 40% 35%, rgba(212,175,55,0.16), rgba(255,210,120,0.06)); filter: blur(72px); opacity: 0.95; pointer-events: none; transform: translateZ(0); z-index: 0; mix-blend-mode: screen; }
-.hero-blob-2 { position: absolute; left: -6%; bottom: -8%; width: 420px; height: 420px; background: radial-gradient(circle at 60% 40%, rgba(212,175,55,0.12), rgba(255,210,120,0.04)); filter: blur(64px); opacity: 0.92; pointer-events: none; z-index: 0; mix-blend-mode: screen; }
+.hero-blob-1 { position: absolute; right: -6%; top: 6%; width: 560px; height: 560px; background: radial-gradient(circle at 40% 35%, rgba(212,175,55,0.14), rgba(245,197,66,0.06)); filter: blur(60px); opacity: 0.95; pointer-events: none; transform: translateZ(0); z-index: 0; mix-blend-mode: screen; }
+.hero-blob-2 { position: absolute; left: -6%; bottom: -8%; width: 420px; height: 420px; background: radial-gradient(circle at 60% 40%, rgba(212,175,55,0.10), rgba(245,197,66,0.04)); filter: blur(56px); opacity: 0.92; pointer-events: none; z-index: 0; mix-blend-mode: screen; }
 
 /* Watermark styling for the large GATORS text behind the mascot */
 .hero-watermark {
@@ -553,7 +554,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: clamp(10rem, 25vw, 28rem);
   user-select: none;
   pointer-events: none;
-  color: rgba(109,40,217,0.04);
+  color: rgba(212,175,55,0.06);
   line-height: 0.85;
   letter-spacing: -0.02em;
   white-space: nowrap;
@@ -583,7 +584,7 @@ h1, h2, h3, h4, h5, h6 {
 .tilt-card .parallax { transition: transform 0.6s cubic-bezier(.2,.9,.2,1); }
 
 /* Portfolio glow on hover */
-.project-glow { box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 40px rgba(109,40,217,0.04) inset; border-color: rgba(109,40,217,0.08); }
+.project-glow { box-shadow: 0 30px 80px rgba(16,24,40,0.08), 0 0 40px rgba(212,175,55,0.04) inset; border-color: rgba(212,175,55,0.08); }
 
 /* Glass navbar stronger variant */
 header { backdrop-filter: blur(8px) saturate(120%); }
@@ -596,7 +597,7 @@ header { backdrop-filter: blur(8px) saturate(120%); }
 .footer-cta.inview { transform: translateY(0); opacity: 1; }
 
 /* Cursor tweaks for glow */
-.cursor-glow { box-shadow: 0 0 48px rgba(109,40,217,0.12); }
+.cursor-glow { box-shadow: 0 0 48px rgba(212,175,55,0.12); }
 
 /* Flip card styles for services */
 .flip-card .flip-card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.9s cubic-bezier(.2,.9,.2,1); }
